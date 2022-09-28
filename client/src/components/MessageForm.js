@@ -46,7 +46,7 @@ class MessageForm extends React.Component {
     if (this.state.title.length > 2) {
       title = true;
     }
-    if (this.state.message.length > 9) {
+    if (this.state.message.length > 2) {
       message = true;
     }
     if (userName && recipientName && title && message) {
@@ -69,7 +69,7 @@ class MessageForm extends React.Component {
       alert("Form submitted");
     } else {
       alert(
-        "Fill the form first. Remeber that Your name, Recipient name and title has to be at least 3 characters long. Message lenght must be at least 10 characters"
+        "Fill the form first. Remeber that you have to fill each input with at least 3 characters"
       );
     }
   };
