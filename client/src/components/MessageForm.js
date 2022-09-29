@@ -2,14 +2,27 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, Container, Row, Col } from "react-bootstrap";
 import UserMessages from "./UserMessages";
+import Recipient from "./Recipient";
+import Axios from "axios";
 
+const sendMessage = (name, recipient, title, message) => {
+  Axios.post("http://localhost:3001/sendMessage", {
+    name: recipient,
+    sender: name,
+    title,
+    message,
+  }).then((response) => {
+    console.log("Message sent");
+  });
+};
 class MessageForm extends React.Component {
   state = {
     userName: "",
-    recipientName: "",
+    recipientName: "Pablo",
     title: "",
     message: "",
   };
+
   handleUserNameChange = (e) => {
     this.setState({
       userName: e.target.value,
@@ -59,8 +72,13 @@ class MessageForm extends React.Component {
     const validation = this.formValidation();
 
     if (validation) {
+      sendMessage(
+        this.state.userName,
+        this.state.recipientName,
+        this.state.title,
+        this.state.message
+      );
       this.setState({
-        recipientName: "",
         title: "",
         message: "",
       });
@@ -72,6 +90,7 @@ class MessageForm extends React.Component {
     }
   };
   render() {
+    console.log(this.state.recipientName);
     return (
       <div className="messageForm">
         <Container>
@@ -91,15 +110,10 @@ class MessageForm extends React.Component {
             </Row>
             <Row className="mb-3 text-center">
               <Col md={{ span: 3, offset: 3 }}>
-                <Form.Group controlId="RecipientNameInput">
-                  <Form.Label>Recipient name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Recipient name"
-                    value={this.state.recipientName}
-                    onChange={this.handleRecipientNameChange}
-                  />
-                </Form.Group>
+                <Recipient
+                  recipient={this.state.recipientName}
+                  function={this.handleRecipientNameChange}
+                />
               </Col>
               <Col md={{ span: 3 }}>
                 <Form.Group controlId="titleInput">
@@ -135,12 +149,14 @@ class MessageForm extends React.Component {
               </Col>
             </Row>
           </Form>
-          <UserMessages
-            user={this.state.userName}
-            recipient={this.state.recipientName}
-            title={this.state.title}
-            message={this.state.message}
-          />
+          {this.state.recipientName ? (
+            <UserMessages
+              user={this.state.userName}
+              recipient={this.state.recipientName}
+              title={this.state.title}
+              message={this.state.message}
+            />
+          ) : null}
         </Container>
       </div>
     );

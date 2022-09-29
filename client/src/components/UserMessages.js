@@ -3,15 +3,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Table } from "react-bootstrap";
 import Axios from "axios";
 
-function UserMessages() {
+function UserMessages(props) {
   const [listOfMessages, setListOfMessages] = useState([]);
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/getMessages").then((response) => {
+    Axios.get("http://localhost:3001/getMessages", {
+      params: { name: props.recipient },
+    }).then((response) => {
       setListOfMessages(response.data);
       console.log(response.data);
     });
-  }, []);
+  }, [props.recipient]);
 
   return (
     <Container className="p-0 h-100">

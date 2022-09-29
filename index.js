@@ -12,12 +12,8 @@ mongoose.connect(
 );
 
 app.get("/getMessages", (req, res) => {
-  UserModel.findOne({ name: "Pablo"  }, (err, result) => {
-    if (err) {
-      res.json(err);
-    } else {
-      res.json(result.messages);
-    }
+  UserModel.findOne({ name: req.query.name }, (err, result) => {
+    res.json(result.messages);
   });
 });
 
@@ -43,10 +39,10 @@ app.post("/sendMessage", async (req, res) => {
         }
       }
     );
+    res.json({ status: "message sent" });
   } catch (err) {
     res.json({ status: "error", error: "User not found" });
   }
-  res.json(message);
 });
 
 app.listen(3001, () => {
