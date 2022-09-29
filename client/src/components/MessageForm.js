@@ -89,7 +89,7 @@ class MessageForm extends React.Component {
         title: "",
         message: "",
       });
-      alert("Message sent");
+      // alert("Message sent");
     } else {
       alert(
         "Fill the form first. Remeber that you have to fill each input with at least 3 characters"

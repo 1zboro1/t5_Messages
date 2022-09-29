@@ -6,13 +6,18 @@ import Axios from "axios";
 function UserMessages(props) {
   const [listOfMessages, setListOfMessages] = useState([]);
 
+  const time = 5000;
   useEffect(() => {
-    Axios.get("http://localhost:3001/getMessages", {
-      params: { name: props.recipient },
-    }).then((response) => {
-      setListOfMessages(response.data);
-      console.log(response.data);
-    });
+    const interval = setInterval(() => {
+      Axios.get("http://localhost:3001/getMessages", {
+        params: { name: props.recipient },
+      }).then((response) => {
+        setListOfMessages(response.data);
+      });
+    }, time);
+    return () => {
+      clearInterval(interval);
+    };
   }, [props.recipient]);
 
   return (
