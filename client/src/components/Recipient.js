@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -24,6 +24,9 @@ function Recipient(props) {
           InputProps={{
             ...params.InputProps,
             type: "search",
+          }}
+          onKeyDown={(e) => {
+            e.target.value = e.target.value();
           }}
           value={props.recipient}
           onChange={props.function}
