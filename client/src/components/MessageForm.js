@@ -18,9 +18,10 @@ const sendMessage = (name, recipient, title, message) => {
 class MessageForm extends React.Component {
   state = {
     userName: "",
-    recipientName: "Pablo",
+    recipientName: "",
     title: "",
     message: "",
+    focus: false,
   };
 
   handleUserNameChange = (e) => {
@@ -67,6 +68,12 @@ class MessageForm extends React.Component {
     }
     return valid;
   };
+  handleFocus = () => {
+    this.setState({ focus: true });
+  };
+  handleBlur = () => {
+    this.setState({ focus: false });
+  };
   handleClick = (e) => {
     e.preventDefault();
     const validation = this.formValidation();
@@ -110,10 +117,15 @@ class MessageForm extends React.Component {
             </Row>
             <Row className="mb-3 text-center">
               <Col md={{ span: 3, offset: 3 }}>
-                <Recipient
-                  recipient={this.state.recipientName}
-                  function={this.handleRecipientNameChange}
-                />
+                <Form.Group controlId="RecipientNameInput">
+                  <Form.Label>Recipient name</Form.Label>
+                  <Recipient
+                    recipient={this.state.recipientName}
+                    function={this.handleRecipientNameChange}
+                    focus={this.handleFocus}
+                    blur={this.handleBlur}
+                  />
+                </Form.Group>
               </Col>
               <Col md={{ span: 3 }}>
                 <Form.Group controlId="titleInput">
@@ -149,7 +161,7 @@ class MessageForm extends React.Component {
               </Col>
             </Row>
           </Form>
-          {this.state.recipientName ? (
+          {this.state.recipientName && !this.state.focus ? (
             <UserMessages
               user={this.state.userName}
               recipient={this.state.recipientName}
