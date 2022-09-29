@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema({
   messages: [
     {
       sender: { type: String },
-      tile: { type: String },
+      title: { type: String },
       message: { type: String },
     },
   ],

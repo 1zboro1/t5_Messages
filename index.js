@@ -2,19 +2,21 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const UserModel = require("./models/Users");
+const cors = require("cors");
 
 app.use(express.json());
+app.use(cors());
 
 mongoose.connect(
   "mongodb+srv://user123:rB1yUBJvRHRuj6X4@cluster0.jz43fjw.mongodb.net/t5_database?retryWrites=true&w=majority"
 );
 
 app.get("/getMessages", (req, res) => {
-  UserModel.find({}, (err, result) => {
+  UserModel.findOne({ name: "Pablo"  }, (err, result) => {
     if (err) {
       res.json(err);
     } else {
-      res.json(result);
+      res.json(result.messages);
     }
   });
 });
@@ -44,10 +46,9 @@ app.post("/sendMessage", async (req, res) => {
   } catch (err) {
     res.json({ status: "error", error: "User not found" });
   }
-
   res.json(message);
 });
 
 app.listen(3001, () => {
-  console.log("server works");
+  console.log("server works on port 3001");
 });

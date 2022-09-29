@@ -1,21 +1,42 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {Container, Row, Col } from "react-bootstrap";
+import { Container, Table } from "react-bootstrap";
+import Axios from "axios";
 
-class UserMessages extends React.Component {
-  state = {
-    userName: "",
-  };
-  render() {
-    return (
-      <Container className="p-0 h-100">
-        <Row className="h-100">
-          <Col className="square border border-3 border-dark h-100">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus reprehenderit nihil consectetur, omnis architecto quia accusamus voluptatibus veritatis maiores asperiores exercitationem magni fugiat sed nulla! Repellendus officiis esse rem accusantium?
-          </Col>
-        </Row>
-      </Container>
-    );
-  }
+function UserMessages() {
+  const [listOfMessages, setListOfMessages] = useState([]);
+
+  useEffect(() => {
+    Axios.get("http://localhost:3001/getMessages").then((response) => {
+      setListOfMessages(response.data);
+      console.log(response.data);
+    });
+  }, []);
+
+  return (
+    <Container className="p-0 h-100">
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>Sender name</th>
+            <th>Title</th>
+            <th>Message</th>
+          </tr>
+        </thead>
+        <tbody>
+          {listOfMessages.map((message) => {
+            return (
+              <tr key={message._id}>
+                <td>{message.sender}</td>
+                <td>{message.title}</td>
+                <td>{message.message}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+    </Container>
+  );
 }
+
 export default UserMessages;

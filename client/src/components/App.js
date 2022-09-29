@@ -1,4 +1,3 @@
-import "../styles/App.css";
 import MessageForm from "./MessageForm";
 
 function App() {

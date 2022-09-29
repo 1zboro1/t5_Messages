@@ -60,15 +60,13 @@ class MessageForm extends React.Component {
 
     if (validation) {
       this.setState({
-        userName: "",
         recipientName: "",
         title: "",
         message: "",
       });
       console.log("Form submitted");
-      alert("Form submitted");
     } else {
-      alert(
+      console.log(
         "Fill the form first. Remeber that you have to fill each input with at least 3 characters"
       );
     }
@@ -78,7 +76,7 @@ class MessageForm extends React.Component {
       <div className="messageForm">
         <Container>
           <Form className="mb-5" onSubmit={this.handleClick}>
-            <Row className="mb-5 mt-3">
+            <Row className="mb-5 mt-3 text-center">
               <Col md={{ span: 6, offset: 3 }}>
                 <Form.Group controlId="yourNameInput">
                   <Form.Label>Your name</Form.Label>
@@ -91,7 +89,7 @@ class MessageForm extends React.Component {
                 </Form.Group>
               </Col>
             </Row>
-            <Row className="mb-3">
+            <Row className="mb-3 text-center">
               <Col md={{ span: 3, offset: 3 }}>
                 <Form.Group controlId="RecipientNameInput">
                   <Form.Label>Recipient name</Form.Label>
@@ -117,7 +115,7 @@ class MessageForm extends React.Component {
             </Row>
             <Row>
               <Col>
-                <Form.Group controlId="textInput">
+                <Form.Group className="text-center" controlId="textInput">
                   <Form.Label>Message</Form.Label>
                   <Form.Control
                     as="textarea"
@@ -129,11 +127,20 @@ class MessageForm extends React.Component {
                 </Form.Group>
               </Col>
             </Row>
-            <Button type="submit" className="mt-2">
-              Send
-            </Button>
+            <Row className="text-center mt-2">
+              <Col>
+                <Button type="submit" size="lg">
+                  SEND A MESSAGE
+                </Button>
+              </Col>
+            </Row>
           </Form>
-          <UserMessages />
+          <UserMessages
+            user={this.state.userName}
+            recipient={this.state.recipientName}
+            title={this.state.title}
+            message={this.state.message}
+          />
         </Container>
       </div>
     );
