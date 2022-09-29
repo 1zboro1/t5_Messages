@@ -8,6 +8,11 @@ function UserMessages(props) {
 
   const time = 5000;
   useEffect(() => {
+    Axios.get("http://localhost:3001/getMessages", {
+      params: { name: props.recipient },
+    }).then((response) => {
+      setListOfMessages(response.data);
+    });
     const interval = setInterval(() => {
       Axios.get("http://localhost:3001/getMessages", {
         params: { name: props.recipient },

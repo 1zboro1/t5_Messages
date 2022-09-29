@@ -20,6 +20,15 @@ app.get("/getMessages", (req, res) => {
     }
   });
 });
+app.get("/getUsers", (req, res) => {
+  UserModel.find({}, (err, result) => {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(result);
+    }
+  });
+});
 
 app.post("/sendMessage", async (req, res) => {
   var myquery = { name: req.body.name };
