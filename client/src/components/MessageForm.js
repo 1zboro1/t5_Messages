@@ -89,15 +89,14 @@ class MessageForm extends React.Component {
         title: "",
         message: "",
       });
-      console.log("Form submitted");
+      alert("Message sent");
     } else {
-      console.log(
+      alert(
         "Fill the form first. Remeber that you have to fill each input with at least 3 characters"
       );
     }
   };
   render() {
-    console.log(this.state.recipientName);
     return (
       <div className="messageForm">
         <Container>

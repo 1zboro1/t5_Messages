@@ -13,7 +13,11 @@ mongoose.connect(
 
 app.get("/getMessages", (req, res) => {
   UserModel.findOne({ name: req.query.name }, (err, result) => {
-    res.json(result.messages);
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(result.messages);
+    }
   });
 });
 
@@ -39,6 +43,7 @@ app.post("/sendMessage", async (req, res) => {
         }
       }
     );
+    alert("Message sent")
     res.json({ status: "message sent" });
   } catch (err) {
     res.json({ status: "error", error: "User not found" });
